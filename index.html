@@ -44,14 +44,14 @@
         .tree {
             font-size: 250px;
             line-height: 1;
-            margin-bottom: -20px;
+            margin-bottom: 20px;
             position: relative;
             user-select: none;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
         }
 
         /* زر الإسقاط */
-        .drop-btn {
+        #dropBtn {
             padding: 15px 40px;
             font-size: 22px;
             background-color: #2e7d32;
@@ -61,11 +61,10 @@
             cursor: pointer;
             box-shadow: 0 6px 15px rgba(0,0,0,0.4);
             transition: 0.3s;
-            margin-top: 60px;
             z-index: 100;
         }
 
-        .drop-btn:hover {
+        #dropBtn:hover {
             transform: scale(1.1);
             background-color: #1b5e20;
         }
@@ -73,7 +72,7 @@
         /* الهدية الساقطة */
         .falling-gift {
             position: absolute;
-            font-size: 70px;
+            font-size: 80px;
             cursor: pointer;
             display: none;
             z-index: 50;
@@ -82,9 +81,9 @@
 
         @keyframes dropAndBounce {
             0% { transform: translate(-50%, -400px); opacity: 0; }
-            60% { transform: translate(-50%, 80px); opacity: 1; }
-            80% { transform: translate(-50%, 50px); }
-            100% { transform: translate(-50%, 80px); }
+            60% { transform: translate(-50%, 100px); opacity: 1; }
+            80% { transform: translate(-50%, 70px); }
+            100% { transform: translate(-50%, 100px); }
         }
 
         /* نافذة الرسالة */
@@ -125,26 +124,44 @@
             background: rgba(0,0,0,0.7);
             z-index: 1500;
         }
+
+        /* تحكم الصوت */
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2000;
+        }
     </style>
 </head>
 <body>
 
-    <iframe width="0" height="0" src="https://www.youtube.com/embed/47KkONv_L4I?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+    <audio id="bgMusic" loop autoplay>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://www.chosic.com/wp-content/uploads/2021/11/Jingle-Bells-Country.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="audio-controls">
+        <button onclick="document.getElementById('bgMusic').muted = !document.getElementById('bgMusic').muted" style="border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">🔇/🔊</button>
+    </div>
 
     <div class="container">
         <div class="tree">🎄</div>
+        
         <div id="gift" class="falling-gift" onclick="openMessage()">🎁</div>
-        <button class="drop-btn" onclick="dropGift()">أطلب هديتك الآن 🎁</button>
+
+        <button id="dropBtn" onclick="dropGift()">أطلب هديتك الآن 🎁</button>
     </div>
 
     <div id="overlay" class="overlay" onclick="closeMessage()"></div>
     <div id="modal" class="modal">
         <h2>كل عام وأنت بألف خير! ✨</h2>
-        <p>أتمنى لك سنة 2026 سعيدة مليئة بالنجاحات والأفراح 🎊</p>
+        <p>أتمنى لك سنة 2026 مليئة بالسعادة والنجاح 🎊</p>
         <button class="close-btn" onclick="closeMessage()">إغلاق</button>
     </div>
 
     <script>
+        // نظام الثلج
         function createSnowflake() {
             const snow = document.createElement('div');
             snow.innerHTML = '❄';
@@ -157,7 +174,17 @@
         }
         setInterval(createSnowflake, 100);
 
+        // وظيفة إسقاط الهدية وإخفاء الزر
         function dropGift() {
+            // تشغيل الموسيقى إذا كانت متوقفة بسبب سياسة المتصفح
+            const music = document.getElementById('bgMusic');
+            music.play();
+
+            // إخفاء الزر
+            const btn = document.getElementById('dropBtn');
+            btn.style.display = 'none';
+
+            // إظهار وإسقاط الهدية
             const gift = document.getElementById('gift');
             gift.style.display = 'block';
             gift.style.left = '50%';
