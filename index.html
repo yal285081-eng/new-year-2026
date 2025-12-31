@@ -31,111 +31,166 @@
 
         .login-box {
             background: white;
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border: 4px solid #ffcc00;
+            width: 80%;
+            max-width: 350px;
         }
 
         .login-box input {
-            padding: 10px;
+            padding: 12px;
             font-size: 18px;
             border-radius: 10px;
             border: 2px solid #ccc;
-            margin-bottom: 20px;
-            width: 80%;
+            margin: 15px 0;
+            width: 90%;
             text-align: center;
         }
 
         .login-box button {
-            padding: 10px 30px;
+            padding: 12px 30px;
             font-size: 18px;
             background: #2e7d32;
             color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            font-weight: bold;
         }
 
-        /* الفيديو المتحرك */
-        #bg-video {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 200px;
-            border-radius: 15px;
-            display: none;
-            z-index: 100;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        /* محتوى الموقع الأساسي (مخفي في البداية) */
+        /* محتوى الموقع الأساسي */
         #main-content {
             display: none;
             text-align: center;
+            position: relative;
         }
 
-        /* الثلج والشجرة (نفس التصميم السابق) */
-        .snowflake { position: fixed; top: -10px; color: white; z-index: 1000; pointer-events: none; animation: fall linear forwards; }
+        /* تنسيق الفيديو فوق الشجرة */
+        #bg-video {
+            width: 120px; /* تصغير حجم الفيديو */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: -40px; /* تقريبه من قمة الشجرة */
+            position: relative;
+            z-index: 10;
+        }
+
+        .tree {
+            font-size: 200px;
+            line-height: 1;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            position: relative;
+            z-index: 5;
+            user-select: none;
+        }
+
+        /* الثلج */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            z-index: 1000;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
         @keyframes fall { to { transform: translateY(105vh); } }
 
-        .tree { font-size: 200px; line-height: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); margin-bottom: 20px; }
-        
+        /* زر الهدايا */
         #dropBtn {
-            padding: 15px 40px; font-size: 22px; background-color: #2e7d32; color: white;
-            border: 3px solid #ffcc00; border-radius: 50px; cursor: pointer; transition: 0.3s;
+            padding: 15px 40px;
+            font-size: 20px;
+            background-color: #2e7d32;
+            color: white;
+            border: 3px solid #ffcc00;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 30px;
         }
 
-        .falling-gift { position: absolute; font-size: 80px; cursor: pointer; display: none; z-index: 50; }
+        .falling-gift {
+            position: absolute;
+            font-size: 80px;
+            cursor: pointer;
+            display: none;
+            z-index: 50;
+            left: 50%;
+        }
+
         @keyframes dropAndBounce {
             0% { transform: translate(-50%, -400px); opacity: 0; }
-            100% { transform: translate(-50%, 100px); opacity: 1; }
+            60% { transform: translate(-50%, 120px); opacity: 1; }
+            80% { transform: translate(-50%, 100px); }
+            100% { transform: translate(-50%, 120px); }
         }
 
+        /* المودال */
         .modal {
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 40px; border-radius: 30px; z-index: 2000; text-align: center; border: 6px solid #ffcc00;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            z-index: 2000;
+            text-align: center;
+            border: 6px solid #ffcc00;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
         }
-        .overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 1500; }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1500;
+        }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
         <div class="login-box">
-            <h2 style="color: #b30000;">أهلاً بك في 2026! ✨</h2>
-            <p>من فضلك اكتب اسمك للدخول:</p>
-            <input type="text" id="userName" placeholder="اسمك هنا...">
+            <h2 style="color: #b30000; margin-top: 0;">أهلاً بك 2026! ✨</h2>
+            <p>من فضلك اكتب اسمك:</p>
+            <input type="text" id="userName" placeholder="اسمك الجميل...">
             <br>
-            <button onclick="enterSite()">دخول للموقع 🎄</button>
+            <button onclick="enterSite()">دخول 🎄</button>
         </div>
     </div>
-
-    <video id="bg-video" loop muted>
-        <source src="images.mp4" type="video/mp4">
-    </video>
 
     <audio id="bgMusic" loop>
         <source src="🎄.mp3" type="audio/mpeg">
     </audio>
 
     <div id="main-content">
-        <h1 id="welcome-msg" style="color: white; font-size: 30px;"></h1>
+        <h1 id="welcome-msg" style="color: white; font-size: 24px; margin-bottom: 20px;"></h1>
+        
+        <video id="bg-video" loop muted playsinline>
+            <source src="images.mp4" type="video/mp4">
+        </video>
+
         <div class="tree">🎄</div>
+        
         <div id="gift" class="falling-gift" onclick="openMessage()">🎁</div>
+        
         <button id="dropBtn" onclick="dropGift()">أطلب هديتك الآن 🎁</button>
     </div>
 
     <div id="overlay" class="overlay" onclick="closeMessage()"></div>
     <div id="modal" class="modal">
-        <h2 id="modal-title"></h2>
-        <p>أتمنى لك سنة 2026 مليئة بالسعادة والنجاح 🎊</p>
-        <button onclick="closeMessage()" style="padding: 10px 20px; cursor: pointer;">إغلاق</button>
+        <h2 id="modal-title" style="color: #b30000;"></h2>
+        <p style="font-size: 20px;">أتمنى لك سنة 2026 مليئة بالسعادة والنجاح 🎊</p>
+        <button onclick="closeMessage()" style="padding: 10px 25px; cursor: pointer; background: #b30000; color: white; border: none; border-radius: 5px;">إغلاق</button>
     </div>
 
     <script>
-        // وظيفة الدخول
         function enterSite() {
             const name = document.getElementById('userName').value;
             if (name.trim() === "") {
@@ -143,21 +198,19 @@
                 return;
             }
 
-            // إخفاء شاشة الدخول وإظهار المحتوى
             document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('bg-video').style.display = 'block';
+            document.getElementById('main-content').style.display = 'flex';
+            document.getElementById('main-content').style.flexDirection = 'column';
+            document.getElementById('main-content').style.alignItems = 'center';
             
-            // تشغيل الصوت والفيديو
+            // تشغيل الوسائط
             document.getElementById('bgMusic').play();
             document.getElementById('bg-video').play();
 
-            // تخصيص الترحيب
             document.getElementById('welcome-msg').innerText = "سنة سعيدة يا " + name + "!";
             document.getElementById('modal-title').innerText = "كل عام وأنت بخير يا " + name + "!";
         }
 
-        // الثلج
         function createSnowflake() {
             const snow = document.createElement('div');
             snow.innerHTML = '❄';
@@ -168,14 +221,12 @@
             document.body.appendChild(snow);
             setTimeout(() => snow.remove(), 5000);
         }
-        setInterval(createSnowflake, 100);
+        setInterval(createSnowflake, 120);
 
-        // سقوط الهدية
         function dropGift() {
             document.getElementById('dropBtn').style.display = 'none';
             const gift = document.getElementById('gift');
             gift.style.display = 'block';
-            gift.style.left = '50%';
             gift.style.animation = 'dropAndBounce 1.2s ease-out forwards';
         }
 
