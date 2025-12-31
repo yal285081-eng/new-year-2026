@@ -17,151 +17,147 @@
             height: 100vh;
         }
 
-        /* الثلج */
-        .snowflake {
+        /* شاشة إدخال الاسم */
+        #login-screen {
             position: fixed;
-            top: -10px;
-            color: white;
-            z-index: 1000;
-            pointer-events: none;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(105vh); }
-        }
-
-        .container {
-            text-align: center;
-            position: relative;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #b30000;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            z-index: 5000;
         }
 
-        /* الشجرة الكبيرة */
-        .tree {
-            font-size: 250px;
-            line-height: 1;
-            margin-bottom: 20px;
-            position: relative;
-            user-select: none;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-        }
-
-        /* زر الإسقاط */
-        #dropBtn {
-            padding: 15px 40px;
-            font-size: 22px;
-            background-color: #2e7d32;
-            color: white;
-            border: 3px solid #ffcc00;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-            transition: 0.3s;
-            z-index: 100;
-        }
-
-        #dropBtn:hover {
-            transform: scale(1.1);
-            background-color: #1b5e20;
-        }
-
-        /* الهدية الساقطة */
-        .falling-gift {
-            position: absolute;
-            font-size: 80px;
-            cursor: pointer;
-            display: none;
-            z-index: 50;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
-        }
-
-        @keyframes dropAndBounce {
-            0% { transform: translate(-50%, -400px); opacity: 0; }
-            60% { transform: translate(-50%, 100px); opacity: 1; }
-            80% { transform: translate(-50%, 70px); }
-            100% { transform: translate(-50%, 100px); }
-        }
-
-        /* نافذة الرسالة */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .login-box {
             background: white;
             padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            z-index: 2000;
+            border-radius: 20px;
             text-align: center;
-            min-width: 300px;
-            border: 6px solid #ffcc00;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 4px solid #ffcc00;
         }
 
-        .modal h2 { color: #b30000; font-size: 28px; margin-top: 0; }
-        .modal p { font-size: 22px; color: #333; }
-        
-        .close-btn {
-            background: #b30000;
-            color: white;
-            border: none;
-            padding: 10px 25px;
+        .login-box input {
+            padding: 10px;
             font-size: 18px;
             border-radius: 10px;
+            border: 2px solid #ccc;
+            margin-bottom: 20px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .login-box button {
+            padding: 10px 30px;
+            font-size: 18px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 20px;
         }
 
-        .overlay {
+        /* الفيديو المتحرك */
+        #bg-video {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            border-radius: 15px;
             display: none;
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1500;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* تحكم الصوت */
-        .audio-controls {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 2000;
+        /* محتوى الموقع الأساسي (مخفي في البداية) */
+        #main-content {
+            display: none;
+            text-align: center;
         }
+
+        /* الثلج والشجرة (نفس التصميم السابق) */
+        .snowflake { position: fixed; top: -10px; color: white; z-index: 1000; pointer-events: none; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(105vh); } }
+
+        .tree { font-size: 200px; line-height: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); margin-bottom: 20px; }
+        
+        #dropBtn {
+            padding: 15px 40px; font-size: 22px; background-color: #2e7d32; color: white;
+            border: 3px solid #ffcc00; border-radius: 50px; cursor: pointer; transition: 0.3s;
+        }
+
+        .falling-gift { position: absolute; font-size: 80px; cursor: pointer; display: none; z-index: 50; }
+        @keyframes dropAndBounce {
+            0% { transform: translate(-50%, -400px); opacity: 0; }
+            100% { transform: translate(-50%, 100px); opacity: 1; }
+        }
+
+        .modal {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 40px; border-radius: 30px; z-index: 2000; text-align: center; border: 6px solid #ffcc00;
+        }
+        .overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 1500; }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop autoplay>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        <source src="https://www.chosic.com/wp-content/uploads/2021/11/Jingle-Bells-Country.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="audio-controls">
-        <button onclick="document.getElementById('bgMusic').muted = !document.getElementById('bgMusic').muted" style="border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">🔇/🔊</button>
+    <div id="login-screen">
+        <div class="login-box">
+            <h2 style="color: #b30000;">أهلاً بك في 2026! ✨</h2>
+            <p>من فضلك اكتب اسمك للدخول:</p>
+            <input type="text" id="userName" placeholder="اسمك هنا...">
+            <br>
+            <button onclick="enterSite()">دخول للموقع 🎄</button>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="tree">🎄</div>
-        
-        <div id="gift" class="falling-gift" onclick="openMessage()">🎁</div>
+    <video id="bg-video" loop muted>
+        <source src="images.mp4" type="video/mp4">
+    </video>
 
+    <audio id="bgMusic" loop>
+        <source src="🎄.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="main-content">
+        <h1 id="welcome-msg" style="color: white; font-size: 30px;"></h1>
+        <div class="tree">🎄</div>
+        <div id="gift" class="falling-gift" onclick="openMessage()">🎁</div>
         <button id="dropBtn" onclick="dropGift()">أطلب هديتك الآن 🎁</button>
     </div>
 
     <div id="overlay" class="overlay" onclick="closeMessage()"></div>
     <div id="modal" class="modal">
-        <h2>كل عام وأنت بألف خير! ✨</h2>
+        <h2 id="modal-title"></h2>
         <p>أتمنى لك سنة 2026 مليئة بالسعادة والنجاح 🎊</p>
-        <button class="close-btn" onclick="closeMessage()">إغلاق</button>
+        <button onclick="closeMessage()" style="padding: 10px 20px; cursor: pointer;">إغلاق</button>
     </div>
 
     <script>
-        // نظام الثلج
+        // وظيفة الدخول
+        function enterSite() {
+            const name = document.getElementById('userName').value;
+            if (name.trim() === "") {
+                alert("يرجى كتابة الاسم أولاً!");
+                return;
+            }
+
+            // إخفاء شاشة الدخول وإظهار المحتوى
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('bg-video').style.display = 'block';
+            
+            // تشغيل الصوت والفيديو
+            document.getElementById('bgMusic').play();
+            document.getElementById('bg-video').play();
+
+            // تخصيص الترحيب
+            document.getElementById('welcome-msg').innerText = "سنة سعيدة يا " + name + "!";
+            document.getElementById('modal-title').innerText = "كل عام وأنت بخير يا " + name + "!";
+        }
+
+        // الثلج
         function createSnowflake() {
             const snow = document.createElement('div');
             snow.innerHTML = '❄';
@@ -174,17 +170,9 @@
         }
         setInterval(createSnowflake, 100);
 
-        // وظيفة إسقاط الهدية وإخفاء الزر
+        // سقوط الهدية
         function dropGift() {
-            // تشغيل الموسيقى إذا كانت متوقفة بسبب سياسة المتصفح
-            const music = document.getElementById('bgMusic');
-            music.play();
-
-            // إخفاء الزر
-            const btn = document.getElementById('dropBtn');
-            btn.style.display = 'none';
-
-            // إظهار وإسقاط الهدية
+            document.getElementById('dropBtn').style.display = 'none';
             const gift = document.getElementById('gift');
             gift.style.display = 'block';
             gift.style.left = '50%';
