@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مفاجأة السنة الجديدة 2026</title>
+    <title>احتفال السنة الجديدة 2026</title>
     <style>
         body {
             margin: 0;
@@ -34,47 +34,60 @@
         .container {
             text-align: center;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* الشجرة الكبيرة */
         .tree {
-            font-size: 120px;
-            margin-bottom: 20px;
+            font-size: 250px;
+            line-height: 1;
+            margin-bottom: -20px;
             position: relative;
+            user-select: none;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
         }
 
         /* زر الإسقاط */
         .drop-btn {
-            padding: 12px 25px;
-            font-size: 18px;
+            padding: 15px 40px;
+            font-size: 22px;
             background-color: #2e7d32;
             color: white;
-            border: 2px solid #fff;
-            border-radius: 30px;
+            border: 3px solid #ffcc00;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
             transition: 0.3s;
+            margin-top: 60px;
+            z-index: 100;
         }
 
-        .drop-btn:hover { background-color: #1b5e20; }
+        .drop-btn:hover {
+            transform: scale(1.1);
+            background-color: #1b5e20;
+        }
 
         /* الهدية الساقطة */
         .falling-gift {
             position: absolute;
-            font-size: 50px;
+            font-size: 70px;
             cursor: pointer;
             display: none;
             z-index: 50;
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
         }
 
         @keyframes dropAndBounce {
-            0% { transform: translate(-50%, -250px); opacity: 0; }
-            60% { transform: translate(-50%, 50px); opacity: 1; }
-            80% { transform: translate(-50%, 30px); }
-            100% { transform: translate(-50%, 50px); }
+            0% { transform: translate(-50%, -400px); opacity: 0; }
+            60% { transform: translate(-50%, 80px); opacity: 1; }
+            80% { transform: translate(-50%, 50px); }
+            100% { transform: translate(-50%, 80px); }
         }
 
-        /* مربع الرسالة (Modal) */
+        /* نافذة الرسالة */
         .modal {
             display: none;
             position: fixed;
@@ -82,68 +95,68 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             z-index: 2000;
             text-align: center;
-            min-width: 250px;
-            border: 4px solid #ffcc00;
+            min-width: 300px;
+            border: 6px solid #ffcc00;
         }
 
-        .modal h2 { color: #b30000; margin-top: 0; }
-        .modal p { font-size: 18px; color: #333; }
+        .modal h2 { color: #b30000; font-size: 28px; margin-top: 0; }
+        .modal p { font-size: 22px; color: #333; }
+        
         .close-btn {
             background: #b30000;
             color: white;
             border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .overlay {
             display: none;
             position: fixed;
             top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             z-index: 1500;
         }
     </style>
 </head>
 <body>
 
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/47KkONv_L4I?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+
     <div class="container">
         <div class="tree">🎄</div>
-        
         <div id="gift" class="falling-gift" onclick="openMessage()">🎁</div>
-
-        <button class="drop-btn" onclick="dropGift()">اضغط هنا للحصول على هدية</button>
+        <button class="drop-btn" onclick="dropGift()">أطلب هديتك الآن 🎁</button>
     </div>
 
-    <div id="overlay" class="overlay"></div>
+    <div id="overlay" class="overlay" onclick="closeMessage()"></div>
     <div id="modal" class="modal">
-        <h2>سنة سعيدة 2026! 🎊</h2>
-        <p id="wish-text">أتمنى لك سنة مليئة بالنجاح والفرح وتحقيق كل أحلامك!</p>
-        <button class="close-btn" onclick="closeMessage()">شكراً لك</button>
+        <h2>كل عام وأنت بألف خير! ✨</h2>
+        <p>أتمنى لك سنة 2026 سعيدة مليئة بالنجاحات والأفراح 🎊</p>
+        <button class="close-btn" onclick="closeMessage()">إغلاق</button>
     </div>
 
     <script>
-        // نظام الثلج
         function createSnowflake() {
             const snow = document.createElement('div');
             snow.innerHTML = '❄';
             snow.classList.add('snowflake');
             snow.style.left = Math.random() * 100 + 'vw';
-            snow.style.fontSize = (Math.random() * 10 + 10) + 'px';
+            snow.style.fontSize = (Math.random() * 15 + 10) + 'px';
             snow.style.animationDuration = Math.random() * 3 + 2 + 's';
             document.body.appendChild(snow);
             setTimeout(() => snow.remove(), 5000);
         }
-        setInterval(createSnowflake, 150);
+        setInterval(createSnowflake, 100);
 
-        // وظيفة إسقاط الهدية
         function dropGift() {
             const gift = document.getElementById('gift');
             gift.style.display = 'block';
@@ -151,13 +164,11 @@
             gift.style.animation = 'dropAndBounce 1.2s ease-out forwards';
         }
 
-        // فتح الرسالة
         function openMessage() {
             document.getElementById('modal').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
 
-        // إغلاق الرسالة
         function closeMessage() {
             document.getElementById('modal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
